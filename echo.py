@@ -25,6 +25,7 @@ import pendulum
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.empty import EmptyOperator
+from airflow.models import Variable
 
 with DAG(
     dag_id="example_bash_echo",
