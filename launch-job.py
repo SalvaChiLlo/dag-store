@@ -46,7 +46,7 @@ else:
             print("INSTALLING DEPENDECIES")
             with open(job_dir + '/output_dependencies.txt') as f:
                 subprocess.Popen(
-                    ['cd', job_dir, '&&', 'python install -r requirements.txt'], stdout=f, stderr=f, universal_newlines=True)
+                    ['cd', job_dir, '&&', 'python install -r requirements.txt -t .'], stdout=f, stderr=f, universal_newlines=True)
 
         @task()
         def execute(job_id: str):
