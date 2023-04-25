@@ -36,6 +36,7 @@ else:
                 raise ValueError("You should provide a 'git_url'")
             
             Repo.clone_from(git_url, '{{ params.job_dir }}')
+            print('{{ params.job_dir }}')
 
         @task()
         def install_dependencies():
