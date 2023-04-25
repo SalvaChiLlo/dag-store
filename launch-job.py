@@ -45,12 +45,12 @@ else:
             time.sleep(10)
             print("INSTALLING DEPENDECIES")
             subprocess.Popen(
-                ['cd', job_dir, '&&', 'python', 'install -r requirements.txt -t .'])
+                ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
 
         @task()
         def execute(job_id: str, job_dir: str):
             print("EXECUTE JOB")
-            subprocess.Popen(['cd', job_dir, '&&', 'python main.py'])
+            subprocess.Popen(['python', f'{job_dir}/main.py'])
 
         @task()
         def save_results(job_id: str, job_dir: str):
