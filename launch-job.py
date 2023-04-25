@@ -27,6 +27,7 @@ else:
         )
         def clone(git_url: str, job_id: str):
             from git import Repo
+            print("CLONING REPOSITORY")
 
             if git_url == None or git_url == "":
                 raise ValueError("You should provide a 'git_url'")
@@ -38,18 +39,15 @@ else:
 
         @task()
         def install_dependencies():
-
-            return
+            print("INSTALLING DEPENDECIES")
 
         @task()
         def execute():
-
-            return
+            print("EXECUTE JOB")
 
         @task()
         def save_results():
-
-            return
+            print("SAVE RESULTS")
 
         clone('{{ dag_run.conf["git_url"] }}', '{{ dag_run.conf["job_id"] }}') >> install_dependencies() >> execute() >> save_results()
 
