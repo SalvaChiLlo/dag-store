@@ -21,6 +21,7 @@ else:
             params={}
     )
     def custom_job_executor():
+        job_dir = '/tmp/'+ '{{ dag_run.conf["job_id"] }}'
 
         @task.virtualenv(
                 requirements=["gitpython==3.1.31"]
@@ -35,7 +36,7 @@ else:
             if job_id == None or job_id == "":
                 raise ValueError("You should provide a 'job_id'")
 
-            Repo.clone_from(git_url, f'/tmp/{job_id}')
+            Repo.clone_from(git_url, job_dir)
 
         @task()
         def install_dependencies():
