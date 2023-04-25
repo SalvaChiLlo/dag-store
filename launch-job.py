@@ -44,9 +44,8 @@ else:
         def install_dependencies(job_id: str, job_dir: str):
             time.sleep(10)
             print("INSTALLING DEPENDECIES")
-            print(f"'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'")
             subprocess.Popen(
-                ['ls','/home/airflow/sources/logs/'])
+                ['cd', job_dir, '&&', 'python', 'install -r requirements.txt -t .'])
 
         @task()
         def execute(job_id: str, job_dir: str):
