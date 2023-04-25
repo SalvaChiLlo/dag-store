@@ -35,9 +35,4 @@ else:
             
             return
         
-        clone()
-        install_dependencies()
-        execute()
-        save_results()
-
-    custom_job_executor()
+        clone >> install_dependencies >> execute >> save_results
