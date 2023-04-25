@@ -23,7 +23,7 @@ else:
     def custom_job_executor():
 
         @task.virtualenv(
-                requirements=["gitpython==latest"]
+                requirements=["gitpython==3.1.31"]
         )
         def clone(git_url: str, job_id: str):
             from git import Repo
