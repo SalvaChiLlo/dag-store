@@ -49,6 +49,11 @@ else:
         def save_results():
             print("SAVE RESULTS")
 
-        clone('{{ dag_run.conf["git_url"] }}', '{{ dag_run.conf["job_id"] }}') >> install_dependencies() >> execute() >> save_results()
+        @task()
+        def clean_environment():
+            print("CLEAN ENVIRONMENT")
+
+
+        clone('{{ dag_run.conf["git_url"] }}', '{{ dag_run.conf["job_id"] }}') >> install_dependencies() >> execute() >> save_results() >> clean_environment()
 
 job_executor = custom_job_executor()
