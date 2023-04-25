@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import shutil
 import subprocess
+import time
 from datetime import datetime
 
 from airflow.decorators import dag, task
@@ -42,6 +43,7 @@ else:
 
         @task()
         def install_dependencies(job_id: str):
+            time.sleep(10)
             job_dir = f'/home/airflow/sources/logs/{job_id}'
             print("INSTALLING DEPENDECIES")
             print(f"'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'")
