@@ -14,7 +14,7 @@ if not shutil.which("virtualenv"):
 else:
 
     @dag(
-            schedule=None, 
+            schedule_interval=None, 
             start_date=datetime(2023, 5, 1), 
             catchup=False, 
             tags=["Custom Job Executor"],
@@ -51,5 +51,6 @@ else:
 
             return
 
-        clone(dag_run.conf["git_url"], dag_run.conf["job_id"]) >> install_dependencies() >> execute() >> save_results()
-custom_job_executor()
+        clone('{{ dag_run.conf["git_url"] }}, '{{ dag_run.conf["job_id"] }}') >> install_dependencies() >> execute() >> save_results()
+
+custom_job_executor = custom_job_executor()
