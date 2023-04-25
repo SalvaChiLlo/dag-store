@@ -43,5 +43,5 @@ else:
 
             return
 
-        clone() >> install_dependencies() >> execute() >> save_results()
+        clone(params.git_url, params.job_id) >> install_dependencies() >> execute() >> save_results()
 custom_job_executor()
