@@ -46,7 +46,7 @@ else:
             print("INSTALLING DEPENDECIES")
             print(f"'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'")
             subprocess.Popen(
-                ['ls /home/airflow/sources/logs/'])
+                ['ls','/home/airflow/sources/logs/'])
 
         @task()
         def execute(job_id: str, job_dir: str):
