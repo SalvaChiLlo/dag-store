@@ -35,7 +35,7 @@ else:
             if job_id == None or job_id == "":
                 raise ValueError("You should provide a 'job_id'")
             
-            job_dir = f'/tmp/{jod_id}'
+            job_dir = f'/tmp/{job_id}'
             print(job_dir)
             Repo.clone_from(git_url, job_dir)
 
