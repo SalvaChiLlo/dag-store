@@ -27,7 +27,7 @@ else:
         @task.virtualenv(
             requirements=["gitpython==3.1.31"]
         )
-        def clone(git_url: str, job_id: str):
+        def clone(git_url: str, job_id: str, job_dir: str):
             from git import Repo
             print("CLONING REPOSITORY")
 
@@ -37,37 +37,35 @@ else:
             if job_id == None or job_id == "":
                 raise ValueError("You should provide a 'job_id'")
 
-            job_dir = f'/home/airflow/sources/logs/{job_id}'
             print(job_dir)
             Repo.clone_from(git_url, job_dir)
 
         @task()
-        def install_dependencies(job_id: str):
+        def install_dependencies(job_id: str, job_dir: str):
             time.sleep(10)
-            job_dir = f'/home/airflow/sources/logs/{job_id}'
             print("INSTALLING DEPENDECIES")
             print(f"'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'")
             subprocess.Popen(
-                [f'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'])
+                ['ls /home/airflow/sources/logs/'])
 
         @task()
-        def execute(job_id: str):
+        def execute(job_id: str, job_dir: str):
             print("EXECUTE JOB")
-            job_dir = f'/home/airflow/sources/logs/{job_id}'
             subprocess.Popen(['cd', job_dir, '&&', 'python main.py'])
 
         @task()
-        def save_results(job_id: str):
+        def save_results(job_id: str, job_dir: str):
             print("SAVE RESULTS")
 
         @task()
-        def clean_environment(job_id: str):
+        def clean_environment(job_id: str, job_dir: str):
             print("CLEAN ENVIRONMENT")
 
         job_id = '{{ dag_run.conf["job_id"] }}'
         git_url = '{{ dag_run.conf["git_url"] }}'
+        job_dir = f'/home/airflow/sources/logs/{job_id}'
 
-        clone(git_url, job_id) >> install_dependencies(job_id) >> execute(
-            job_id) >> save_results(job_id) >> clean_environment(job_id)
+        clone(git_url, job_id, job_dir) >> install_dependencies(job_id, job_dir) >> execute(
+            job_id, job_dir) >> save_results(job_id, job_dir) >> clean_environment(job_id, job_dir)
 
 job_executor = custom_job_executor()
