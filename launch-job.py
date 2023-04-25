@@ -13,10 +13,18 @@ if not shutil.which("virtualenv"):
         "The custom_job_executor DAG requires virtualenv, please install it.")
 else:
 
-    @dag(schedule=None, start_date=datetime(2023, 5, 1), catchup=False, tags=["Custom Job Executor"])
+    @dag(
+            schedule=None, 
+            start_date=datetime(2023, 5, 1), 
+            catchup=False, 
+            tags=["Custom Job Executor"],
+            params={}
+    )
     def custom_job_executor():
 
-        @task.virtualenv(requirements=["gitpython==latest"])
+        @task.virtualenv(
+                requirements=["gitpython==latest"]
+        )
         def clone(git_url: str, job_id: str):
             from git import Repo
 
@@ -43,5 +51,5 @@ else:
 
             return
 
-        clone(params.git_url, params.job_id) >> install_dependencies() >> execute() >> save_results()
+        clone(dag_run.conf["git_url"], dag_run.conf["job_id"]) >> install_dependencies() >> execute() >> save_results()
 custom_job_executor()
