@@ -46,7 +46,7 @@ else:
             print("INSTALLING DEPENDECIES")
             print(f"'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'")
             subprocess.Popen(
-                ['cd {job_dir}', '&&', 'python install -r requirements.txt -t .'])
+                [f'cd {job_dir}', '&&', 'python install -r requirements.txt -t .'])
 
         @task()
         def execute(job_id: str):
