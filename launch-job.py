@@ -36,13 +36,13 @@ else:
             if job_id == None or job_id == "":
                 raise ValueError("You should provide a 'job_id'")
 
-            job_dir = f'/tmp/{job_id}'
+            job_dir = f'/home/airflow/sources/logs/{job_id}'
             print(job_dir)
             Repo.clone_from(git_url, job_dir)
 
         @task()
         def install_dependencies(job_id: str):
-            job_dir = f'/tmp/{job_id}'
+            job_dir = f'/home/airflow/sources/logs/{job_id}'
             print("INSTALLING DEPENDECIES")
             with open(job_dir + '/output_dependencies.txt') as f:
                 subprocess.Popen(
@@ -51,7 +51,7 @@ else:
         @task()
         def execute(job_id: str):
             print("EXECUTE JOB")
-            job_dir = f'/tmp/{job_id}'
+            job_dir = f'/home/airflow/sources/logs/{job_id}'
             with open(job_dir + '/output_execution.txt') as f:
                 subprocess.Popen(
                     ['cd', job_dir, '&&', 'python main.py'], stdout=f, stderr=f, universal_newlines=True)
