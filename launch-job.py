@@ -44,7 +44,7 @@ else:
         def install_dependencies(job_id: str):
             job_dir = f'/home/airflow/sources/logs/{job_id}'
             print("INSTALLING DEPENDECIES")
-            with open(job_dir + '/output_dependencies.txt') as f:
+            with open(job_dir + '/output_dependencies.txt', 'w+') as f:
                 subprocess.Popen(
                     ['cd', job_dir, '&&', 'python install -r requirements.txt -t .'], stdout=f, stderr=f, universal_newlines=True)
 
@@ -52,7 +52,7 @@ else:
         def execute(job_id: str):
             print("EXECUTE JOB")
             job_dir = f'/home/airflow/sources/logs/{job_id}'
-            with open(job_dir + '/output_execution.txt') as f:
+            with open(job_dir + '/output_execution.txt', 'w+') as f:
                 subprocess.Popen(
                     ['cd', job_dir, '&&', 'python main.py'], stdout=f, stderr=f, universal_newlines=True)
 
