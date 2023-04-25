@@ -10,7 +10,7 @@ log = logging.getLogger(__name__)
 
 @dag(
         schedule_interval=None, 
-        start_date=datetime(2023, 5, 1), 
+        start_date=datetime(2021, 5, 1), 
         catchup=False, 
         tags=["Custom Job Executor"],
         params={}
