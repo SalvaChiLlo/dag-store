@@ -7,6 +7,7 @@ from datetime import datetime
 from airflow.decorators import dag, task
 
 log = logging.getLogger(__name__)
+job_dir = '/tmp/{{ dag_run.run_id }}'
 
 if not shutil.which("virtualenv"):
     log.warning(
@@ -25,17 +26,14 @@ else:
         @task.virtualenv(
                 requirements=["gitpython==3.1.31"]
         )
-        def clone(git_url: str, job_id: str):
+        def clone(git_url: str):
             from git import Repo
             print("CLONING REPOSITORY")
 
             if git_url == None or git_url == "":
                 raise ValueError("You should provide a 'git_url'")
-
-            if job_id == None or job_id == "":
-                raise ValueError("You should provide a 'job_id'")
-
-            Repo.clone_from(git_url, f'/tmp/{job_id}')
+            
+            Repo.clone_from(git_url, job_dir)
 
         @task()
         def install_dependencies():
@@ -54,6 +52,6 @@ else:
             print("CLEAN ENVIRONMENT")
 
 
-        clone('{{ dag_run.conf["git_url"] }}', '{{ dag_run.conf["job_id"] }}') >> install_dependencies() >> execute() >> save_results() >> clean_environment()
+        clone('{{ dag_run.conf["git_url"] }}') >> install_dependencies() >> execute() >> save_results() >> clean_environment()
 
 job_executor = custom_job_executor()
