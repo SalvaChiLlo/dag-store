@@ -22,20 +22,20 @@ else:
     )
     def custom_job_executor():
 
-        @task.virtualenv(
-                requirements=["gitpython==latest"]
+        @task(
+                # requirements=["gitpython==latest"]
         )
         def clone(git_url: str, job_id: str):
-            from git import Repo
+            # from git import Repo
             print("CLONING REPOSITORY")
 
-            if git_url == None or git_url == "":
-                raise ValueError("You should provide a 'git_url'")
+            # if git_url == None or git_url == "":
+            #     raise ValueError("You should provide a 'git_url'")
 
-            if job_id == None or job_id == "":
-                raise ValueError("You should provide a 'job_id'")
+            # if job_id == None or job_id == "":
+            #     raise ValueError("You should provide a 'job_id'")
 
-            Repo.clone_from(git_url, f'/tmp/{job_id}')
+            # Repo.clone_from(git_url, f'/tmp/{job_id}')
 
         @task()
         def install_dependencies():
