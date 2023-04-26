@@ -47,7 +47,6 @@ else:
             clean_environment(job_dir)
 
         def install_dependencies(job_dir: str):
-            time.sleep(10)
             print("INSTALLING DEPENDECIES")
             subprocess.Popen(
                 ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
