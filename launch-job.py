@@ -29,9 +29,10 @@ else:
             requirements=["gitpython==3.1.31"]
         )
         def execute_job(git_url: str, job_id: str, job_dir: str):
+            from git import Repo
+            import subprocess
 
             def clone():
-                from git import Repo
                 print("CLONING REPOSITORY")
 
                 if git_url == None or git_url == "":
