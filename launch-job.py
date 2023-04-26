@@ -32,7 +32,6 @@ else:
             from git import Repo
             import subprocess
 
-            @task()
             def clone():
                 print("CLONING REPOSITORY")
 
@@ -45,23 +44,19 @@ else:
                 print(job_dir)
                 Repo.clone_from(git_url, job_dir)
 
-            @task()
             def install_dependencies():
                 print("INSTALLING DEPENDECIES")
                 subprocess.Popen(
                     ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
 
-            @task()
             def execute():
                 print("EXECUTE JOB")
                 subprocess.Popen(['python', f'{job_dir}/main.py'])
 
-            @task()
             def save_results():
                 print("SAVE RESULTS")
                 
 
-            @task()
             def clean_environment():
                 print("CLEAN ENVIRONMENT")
                 # subprocess.Popen(['rm', f'-rf {job_dir}/'])
