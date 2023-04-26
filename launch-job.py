@@ -43,8 +43,6 @@ else:
                 print(job_dir)
                 Repo.clone_from(git_url, job_dir)
 
-
-
             def install_dependencies():
                 time.sleep(10)
                 print("INSTALLING DEPENDECIES")
@@ -74,4 +72,4 @@ else:
         job_dir = f'/home/airflow/sources/logs/{job_id}'
 
         execute_job(git_url, job_id, job_dir)
-custom_job_executor()
+    custom_job_executor()
