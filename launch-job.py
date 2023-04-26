@@ -5,7 +5,7 @@ import shutil
 import subprocess
 import time
 from datetime import datetime
-from git import Repo
+
 
 from airflow.decorators import dag, task
 
@@ -26,8 +26,11 @@ else:
     )
     def custom_job_executor():
 
-        @task()
+        @task.virtualenv(
+            requirements=["gitpython==3.1.31"]
+        )
         def clone(git_url: str, job_id: str, job_dir: str):
+            from git import Repo
             print("CLONING REPOSITORY")
 
             if git_url == None or git_url == "":
