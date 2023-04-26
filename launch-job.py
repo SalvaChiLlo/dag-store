@@ -28,44 +28,50 @@ else:
         @task.virtualenv(
             requirements=["gitpython==3.1.31"]
         )
-        def clone(git_url: str, job_id: str, job_dir: str):
-            from git import Repo
-            print("CLONING REPOSITORY")
+        def execute_job(git_url: str, job_id: str, job_dir: str):
 
-            if git_url == None or git_url == "":
-                raise ValueError("You should provide a 'git_url'")
+            def clone():
+                from git import Repo
+                print("CLONING REPOSITORY")
 
-            if job_id == None or job_id == "":
-                raise ValueError("You should provide a 'job_id'")
+                if git_url == None or git_url == "":
+                    raise ValueError("You should provide a 'git_url'")
 
-            print(job_dir)
-            Repo.clone_from(git_url, job_dir)
+                if job_id == None or job_id == "":
+                    raise ValueError("You should provide a 'job_id'")
 
-            install_dependencies(job_dir)
-            execute(job_dir)
-            save_results(job_dir)
-            clean_environment(job_dir)
+                print(job_dir)
+                Repo.clone_from(git_url, job_dir)
 
-            def install_dependencies(job_dir: str):
+
+
+            def install_dependencies():
+                time.sleep(10)
                 print("INSTALLING DEPENDECIES")
                 subprocess.Popen(
                     ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
 
-            def execute(job_dir: str):
+            def execute():
                 print("EXECUTE JOB")
                 subprocess.Popen(['python', f'{job_dir}/main.py'])
 
-            def save_results(job_dir: str):
+            def save_results():
                 print("SAVE RESULTS")
                 
 
-            def clean_environment(job_dir: str):
+            def clean_environment():
                 print("CLEAN ENVIRONMENT")
                 # subprocess.Popen(['rm', f'-rf {job_dir}/'])
+            
+            clone()
+            install_dependencies()
+            execute()
+            save_results()
+            clean_environment()
 
         job_id = '{{ dag_run.conf["job_id"] }}'
         git_url = '{{ dag_run.conf["git_url"] }}'
         job_dir = f'/home/airflow/sources/logs/{job_id}'
 
-        clone(git_url, job_id, job_dir)
+        execute_job(git_url, job_id, job_dir)
 custom_job_executor()
