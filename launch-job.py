@@ -44,7 +44,6 @@ else:
                 Repo.clone_from(git_url, job_dir)
 
             def install_dependencies():
-                time.sleep(10)
                 print("INSTALLING DEPENDECIES")
                 subprocess.Popen(
                     ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
