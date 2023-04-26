@@ -21,8 +21,7 @@ else:
         start_date=datetime(2022, 5, 1),
         catchup=False,
         tags=["Custom Job Executor"],
-        params={},
-        worker_concurrency=1
+        params={}
     )
     def custom_job_executor():
 
