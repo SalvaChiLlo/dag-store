@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import time
 from datetime import datetime
+from git import Repo
 
 from airflow.decorators import dag, task
 
@@ -20,15 +21,13 @@ else:
         start_date=datetime(2022, 5, 1),
         catchup=False,
         tags=["Custom Job Executor"],
-        params={}
+        params={},
+        worker_concurrency=1
     )
     def custom_job_executor():
 
-        @task.virtualenv(
-            requirements=["gitpython==3.1.31"]
-        )
+        @task()
         def clone(git_url: str, job_id: str, job_dir: str):
-            from git import Repo
             print("CLONING REPOSITORY")
 
             if git_url == None or git_url == "":
@@ -55,16 +54,18 @@ else:
         @task()
         def save_results(job_id: str, job_dir: str):
             print("SAVE RESULTS")
+            
 
         @task()
-        def clean_environment(job_id: str, job_dir: str):
+        def clean_environment(job_dir: str):
             print("CLEAN ENVIRONMENT")
+            # subprocess.Popen(['rm', f'-rf {job_dir}/'])
 
         job_id = '{{ dag_run.conf["job_id"] }}'
         git_url = '{{ dag_run.conf["git_url"] }}'
         job_dir = f'/home/airflow/sources/logs/{job_id}'
 
         clone(git_url, job_id, job_dir) >> install_dependencies(job_id, job_dir) >> execute(
-            job_id, job_dir) >> save_results(job_id, job_dir) >> clean_environment(job_id, job_dir)
+            job_id, job_dir) >> save_results(job_id, job_dir) >> clean_environment(job_dir)
 
 job_executor = custom_job_executor()
