@@ -46,22 +46,22 @@ else:
             save_results(job_dir)
             clean_environment(job_dir)
 
-        def install_dependencies(job_dir: str):
-            print("INSTALLING DEPENDECIES")
-            subprocess.Popen(
-                ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
+            def install_dependencies(job_dir: str):
+                print("INSTALLING DEPENDECIES")
+                subprocess.Popen(
+                    ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
 
-        def execute(job_dir: str):
-            print("EXECUTE JOB")
-            subprocess.Popen(['python', f'{job_dir}/main.py'])
+            def execute(job_dir: str):
+                print("EXECUTE JOB")
+                subprocess.Popen(['python', f'{job_dir}/main.py'])
 
-        def save_results(job_dir: str):
-            print("SAVE RESULTS")
-            
+            def save_results(job_dir: str):
+                print("SAVE RESULTS")
+                
 
-        def clean_environment(job_dir: str):
-            print("CLEAN ENVIRONMENT")
-            # subprocess.Popen(['rm', f'-rf {job_dir}/'])
+            def clean_environment(job_dir: str):
+                print("CLEAN ENVIRONMENT")
+                # subprocess.Popen(['rm', f'-rf {job_dir}/'])
 
         job_id = '{{ dag_run.conf["job_id"] }}'
         git_url = '{{ dag_run.conf["git_url"] }}'
