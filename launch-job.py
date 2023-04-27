@@ -21,7 +21,8 @@ else:
         start_date=datetime(2022, 5, 1),
         catchup=False,
         tags=["Custom Job Executor"],
-        params={}
+        params={},
+        queue="my_queue"
     )
     def custom_job_executor():
 
