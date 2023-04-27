@@ -47,20 +47,19 @@ else:
             def install_dependencies():
                 print("INSTALLING DEPENDECIES")
                 subprocess.Popen(
-                    ['python', f'install -r {job_dir}/requirements.txt -t {job_dir}/'])
+                    ['python', 'install', '-r', '{job_dir}/requirements.txt', '-t', '{job_dir}/'])
 
             def execute():
-                print("EXECUTE JOB")
+                print("EXECUTING JOB")
                 subprocess.Popen(['python', f'{job_dir}/main.py'])
 
             def save_results():
-                print("SAVE RESULTS")
-                
+                print("SAVING RESULTS")
 
             def clean_environment():
-                print("CLEAN ENVIRONMENT")
+                print("CLEANING ENVIRONMENT")
                 # subprocess.Popen(['rm', f'-rf {job_dir}/'])
-            
+
             clone()
             install_dependencies()
             execute()
