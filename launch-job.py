@@ -22,7 +22,6 @@ else:
         catchup=False,
         tags=["Custom Job Executor"],
         params={},
-        queue="my_queue"
     )
     def custom_job_executor():
 
