@@ -47,7 +47,7 @@ else:
             def install_dependencies():
                 print("INSTALLING DEPENDECIES")
                 subprocess.Popen(
-                    ['pip', 'install', '-r', '{job_dir}/requirements.txt', '-t', '{job_dir}/', '--no-user'])
+                    ['pip', 'install', '-r', f'{job_dir}/requirements.txt', '-t', f'{job_dir}/', '--no-user'])
 
             def execute():
                 print("EXECUTING JOB")
